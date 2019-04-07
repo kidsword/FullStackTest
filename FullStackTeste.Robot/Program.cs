@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 
 namespace FullStackTeste.Robot
@@ -21,11 +22,12 @@ namespace FullStackTeste.Robot
                 .Create("localhost", "statistic")
                 .SetCallback((o, msg) =>
                 {
+                    //Save in json file
                     var fullFilename = GetFullFileName();
                     SaveNewMessage(fullFilename, msg);
-
-
-
+                    //Save in SQL
+                    var objMsg = JsonConvert.DeserializeObject<Statistics>(msg);
+                    SaveNewMessage(objMsg);
                 })
                 .Start();
 
@@ -44,7 +46,11 @@ namespace FullStackTeste.Robot
             if (!Directory.Exists(fullPath)) Directory.CreateDirectory(fullPath);
             return Path.Combine(fullPath, filename);
         }
-
+        /// <summary>
+        /// Save the message in json file
+        /// </summary>
+        /// <param name="fullfilename"></param>
+        /// <param name="message"></param>
         private static void SaveNewMessage(string fullfilename, string message)
         {
             lock (locker)
@@ -66,6 +72,67 @@ namespace FullStackTeste.Robot
                 allMessages = JsonConvert.SerializeObject(msgList);
                 File.WriteAllText(fullfilename, allMessages);
             }
+        }
+
+
+        private static void SaveNewMessage(Statistics msg)
+        {
+            using (var con = new SqlConnection())
+            {
+                try
+                {
+                    con.ConnectionString = @"Data Source=.\sqlexpress;Initial Catalog=FullStackTest;Integrated Security=True";
+                    con.Open();
+
+                    SqlCommand command = con.CreateCommand();
+                    SqlTransaction transaction;
+
+                    transaction = con.BeginTransaction("fullStackTransation");
+
+                    command.Connection = con;
+                    command.Transaction = transaction;
+
+                    try
+                    {
+                        command.CommandText = "Statistic_Save";
+                        command.CommandType = System.Data.CommandType.StoredProcedure;
+                        command.Parameters.Add(new SqlParameter("@IP", msg.IP ));
+                        command.Parameters.Add(new SqlParameter("@Page", msg.Page));
+
+                        int? StatisticId = (int?)command.ExecuteScalar();
+
+                        command.Dispose();
+
+                        if (StatisticId.HasValue)
+                        {
+                            foreach(var param in msg.Parameters)
+                            {
+                                command = new SqlCommand("Statistic_Parameters_Save", con, transaction);
+                                command.CommandType = System.Data.CommandType.StoredProcedure;
+                                command.Parameters.Add(new SqlParameter("@StatisticId", StatisticId.GetValueOrDefault(0)));
+                                command.Parameters.Add(new SqlParameter("@Name", param.Name ));
+                                command.Parameters.Add(new SqlParameter("@Value", param.Value ));
+                                command.ExecuteNonQuery();
+                                command.Dispose();
+                            }
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Fail to save at SQL: {ex.Message}");
+                }
+            }
+            
         }
     }
 }

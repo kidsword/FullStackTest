@@ -5,11 +5,13 @@ VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FullStackTeste.WebAPI", "FullStackTeste.WebAPI\FullStackTeste.WebAPI.csproj", "{F4EE371A-8503-4BFD-A805-27B3F2C46C51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ.Helper", "RabbitMQ.Helper\RabbitMQ.Helper.csproj", "{8759AEEB-74CF-4741-894D-8E709653F154}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMQ.Helper", "RabbitMQ.Helper\RabbitMQ.Helper.csproj", "{8759AEEB-74CF-4741-894D-8E709653F154}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullStackTeste.Robot", "FullStackTeste.Robot\FullStackTeste.Robot.csproj", "{4181A134-C21B-4A04-8763-05544910431E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FullStackTeste.Robot", "FullStackTeste.Robot\FullStackTeste.Robot.csproj", "{4181A134-C21B-4A04-8763-05544910431E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FullStackTeste.Models", "FullStackTeste.Models\FullStackTeste.Models.csproj", "{B67ABED1-6623-4568-ACB9-6B22135A3345}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "FullStackTeste.DB", "FullStackTeste.DB\FullStackTeste.DB.sqlproj", "{3AD87D87-730A-4104-A28C-93695A7EE387}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,12 @@ Global
 		{B67ABED1-6623-4568-ACB9-6B22135A3345}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B67ABED1-6623-4568-ACB9-6B22135A3345}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B67ABED1-6623-4568-ACB9-6B22135A3345}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AD87D87-730A-4104-A28C-93695A7EE387}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AD87D87-730A-4104-A28C-93695A7EE387}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AD87D87-730A-4104-A28C-93695A7EE387}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{3AD87D87-730A-4104-A28C-93695A7EE387}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AD87D87-730A-4104-A28C-93695A7EE387}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AD87D87-730A-4104-A28C-93695A7EE387}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
