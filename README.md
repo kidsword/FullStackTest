@@ -21,6 +21,6 @@ Test for Full Stack Asp.Net Core Programer
 
 - [x] Create a Robot that consumes the queue in RabbitMQ
   - [x] You should read the Events in the RabbitMQ Queue
-  - [ ] Save the Data in two different Infras
-    - [ ] SQL Server
+  - [x] Save the Data in two different Infras
+    - [x] SQL Server
     - [x] File Server (CSV or JSON)
